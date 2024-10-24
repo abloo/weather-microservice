@@ -1,6 +1,5 @@
 package com.service.weather.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -15,21 +14,25 @@ import com.service.weather.models.WeatherResponse;
 @Component
 public class WeatherClient {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+    private final String apiKey;
+    private final String cnt;
 
-    @Value("${weather.api.key}")
-    private String apiKey;
-    
-    @Value("${weather.api.cnt}")
-    private String cnt;
+    // Constructor-based injection for RestTemplate and properties
+    public WeatherClient(RestTemplate restTemplate, 
+                         @Value("${weather.api.key}") String apiKey, 
+                         @Value("${weather.api.cnt}") String cnt) {
+        this.restTemplate = restTemplate;
+        this.apiKey = apiKey;
+        this.cnt = cnt;
+    }
+
     // Apply Circuit Breaker with a fallback method and Retry mechanism
     @Retry(name = "weatherClientRetry", fallbackMethod = "fallbackWeather")
     @CircuitBreaker(name = "weatherClientCircuitBreaker", fallbackMethod = "fallbackWeather")
     public WeatherResponse getWeatherByCity(String city) {
         log.info("Calling Open Weather API with City : {}",city);
-        String url = String.format("https://api.openweathermap.org/data/2.5/forecast?q=%s&appid=%s&cnt=%s", city, apiKey,cnt);
-        
+        String url = String.format("https://api.openweathermap.org/data/2.5/forecast?q=%s&appid=%s&cnt=%s", city, apiKey, cnt);
         return restTemplate.getForObject(url, WeatherResponse.class);
     }
 

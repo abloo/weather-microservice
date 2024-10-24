@@ -1,7 +1,9 @@
 package com.service.weather.response;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class WeatherRestResponse {
 
     @ApiModelProperty
