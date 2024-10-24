@@ -1,7 +1,9 @@
 package com.service.weather.response;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+@Data
 public class DailyWeather {
 
     @ApiModelProperty
@@ -46,47 +48,6 @@ public class DailyWeather {
         this.time = builder.time;
         this.windSpeed = builder.windSpeed;
         this.visibility = builder.visibility;
-    }
-
-    // Getters
-    public int getMinTemperature() {
-        return minTemperature;
-    }
-
-    public int getMaxTemperature() {
-        return maxTemperature;
-    }
-
-    public int getFeelsLike() {
-        return feelsLike;
-    }
-
-    public int getHumidity() {
-        return humidity;
-    }
-
-    public int getPressure() {
-        return pressure;
-    }
-
-    public int getTemperature() {
-        return temperature;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public double getWindSpeed() {
-        return windSpeed;
-    }
-
-    public double getVisibility() {
-        return visibility;
     }
 
     // Static builder class

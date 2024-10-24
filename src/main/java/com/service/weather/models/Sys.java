@@ -1,17 +1,12 @@
 package com.service.weather.models;
 
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 public class Sys {
     private String pod;
 
-    public String getPod() {
-        return pod;
-    }
-
-    public void setPod(String pod) {
-        this.pod = pod;
-    }
 }

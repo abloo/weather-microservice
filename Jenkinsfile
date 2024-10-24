@@ -44,19 +44,6 @@ pipeline{
                     sh "docker push $REGISTRY_URL/$DOCKER_IMAGE:latest"
                 }
             }
-            //   stage("Push Docker Image to Minikube") {
-            //        steps {
-            //             script {
-            //           // Set the Minikube context
-            //         sh 'kubectl config use-context minikube'
-
-            //         // Update the deployment.yaml file with your image details
-            //         sh 'sed -i "s|image: your-image-name:latest|image: prathaku3docker/weather-microservice:latest|g" deploymentservice.yaml || true'
-
-            //         // Apply the Kubernetes manifest file to deploy your application
-            //         sh 'kubectl apply -f deploymentservice.yaml'
-            //             }
-            //          }
 
             }
     }
