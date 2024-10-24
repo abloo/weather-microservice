@@ -54,6 +54,25 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy Docker Container') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'weather-api-key-id', variable: 'WEATHER_API_KEY')]) {
+                        // Stop and remove any existing container with the name 'weather-app'
+                        bat '''
+                            FOR /F "tokens=*" %%i IN ('docker ps -q --filter "name=weather-app"') DO (
+                                docker stop %%i
+                                docker rm %%i
+                            ) || echo "No container to stop"
+                        '''
+
+                        
+                        bat 'docker run -d -p 8080:8080 --name weather-app -e WEATHER_API_KEY=%WEATHER_API_KEY% %REGISTRY_URL%/%DOCKER_IMAGE%:latest'
+                    }
+                }
+            }
+        }
     }
 
     post {
